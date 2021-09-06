@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{2D03EA34-465D-4AFF-E52A-41AD3BC593F6}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "FantasyGame",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
