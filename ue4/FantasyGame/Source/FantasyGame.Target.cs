@@ -5,10 +5,10 @@ using System.Collections.Generic;
 
 public class FantasyGameTarget : TargetRules
 {
-	public FantasyGameTarget(TargetInfo Target) : base(Target)
+	public FantasyGameTarget( TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 		DefaultBuildSettings = BuildSettingsVersion.V2;
-		ExtraModuleNames.Add("FantasyGame");
+		ExtraModuleNames.AddRange( new string[] { "FantasyGame" } );
 	}
 }
