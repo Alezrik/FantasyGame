@@ -2,7 +2,7 @@
 /_build/
 
 /.idea/*
-
+*.iml
 # If you run "mix test --cover", coverage assets end up here.
 /cover/
 

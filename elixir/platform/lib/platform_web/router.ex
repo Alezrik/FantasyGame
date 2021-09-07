@@ -16,8 +16,20 @@ defmodule PlatformWeb.Router do
   scope "/", PlatformWeb do
     pipe_through :browser
 
+    resources "/users", UserController
+
     get "/", PageController, :index
   end
+
+
+
+
+  scope "/api", PlatformWeb do
+    get "/ping", PingController, :index
+    resources "/sessions", SessionController, except: [:new, :edit]
+  end
+
+
 
   # Other scopes may use custom stacks.
   # scope "/api", PlatformWeb do
