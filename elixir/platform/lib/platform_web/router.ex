@@ -21,15 +21,10 @@ defmodule PlatformWeb.Router do
     get "/", PageController, :index
   end
 
-
-
-
   scope "/api", PlatformWeb do
     get "/ping", PingController, :index
     resources "/sessions", SessionController, except: [:new, :edit]
   end
-
-
 
   # Other scopes may use custom stacks.
   # scope "/api", PlatformWeb do

@@ -16,6 +16,13 @@ class FANTASYGAME_API UFantasyGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 
+	public:
+		void setSessionKey(FString key) {
+			SessionKey = key;
+		};
+private:
+		FString SessionKey;
+
 		/*UPROPERTY()
 		UPlatformClient* platformClient;
 

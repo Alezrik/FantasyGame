@@ -19,6 +19,8 @@ defmodule Platform.Application do
       # {Platform.Worker, arg}
     ]
 
+    Memento.Table.create!(Platform.SessionCache)
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Platform.Supervisor]

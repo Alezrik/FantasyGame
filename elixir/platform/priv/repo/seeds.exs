@@ -10,4 +10,5 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-{:ok, _user} = Platform.Accounts.create_user(%{name: "admin", email: "here@there.com", password: "password"})
+{:ok, _user} =
+  Platform.Accounts.create_user(%{name: "admin", email: "here@there.com", password: "password"})

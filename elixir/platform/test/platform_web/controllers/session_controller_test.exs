@@ -35,13 +35,13 @@ defmodule PlatformWeb.SessionControllerTest do
   describe "create session" do
     test "renders session when data is valid", %{conn: conn} do
       conn = post(conn, Routes.session_path(conn, :create), @create_attrs)
-      assert json_response(conn, 201)["session"]
+      assert json_response(conn, 201)["key"]
     end
 
-#    test "renders errors when data is invalid", %{conn: conn} do
-#      conn = post(conn, Routes.session_path(conn, :create), @invalid_attrs)
-#      assert json_response(conn, 422)["errors"] != %{}
-#    end
+    #    test "renders errors when data is invalid", %{conn: conn} do
+    #      conn = post(conn, Routes.session_path(conn, :create), @invalid_attrs)
+    #      assert json_response(conn, 422)["errors"] != %{}
+    #    end
   end
 
   describe "update session" do

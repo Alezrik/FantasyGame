@@ -7,7 +7,11 @@ defmodule Platform.SessionsTest do
     alias Platform.Sessions.Session
 
     @valid_attrs %{cpu: "some cpu", deviceid: "some deviceid", localip: "some localip"}
-    @update_attrs %{cpu: "some updated cpu", deviceid: "some updated deviceid", localip: "some updated localip"}
+    @update_attrs %{
+      cpu: "some updated cpu",
+      deviceid: "some updated deviceid",
+      localip: "some updated localip"
+    }
     @invalid_attrs %{cpu: nil, deviceid: nil, localip: nil}
 
     def session_fixture(attrs \\ %{}) do

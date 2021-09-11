@@ -3,7 +3,7 @@ defmodule PlatformWeb.SessionController do
 
   alias Platform.Sessions
   alias Platform.Sessions.Session
-require Logger
+  require Logger
 
   action_fallback PlatformWeb.FallbackController
 
@@ -13,13 +13,25 @@ require Logger
   end
 
   def create(conn, session_params) do
-    {:ok, session} = Sessions.create_session(session_params)
-    json_string = "#{session.localip}__#{session.deviceid}__#{session.cpu}"
-      Logger.info(json_string)
-      conn
-      |> put_status(:created)
-      |> json(%{session: json_string})
+    case Sessions.create_session(session_params) do
+      {:ok, session} ->
+        json_string =
+          :crypto.hash(:sha256, "#{session.localip}__#{session.deviceid}__#{session.cpu}")
+          |> Base.encode16()
 
+        Platform.SessionCache.save_session(session.id, json_string)
+
+        conn
+        |> put_status(:created)
+        |> render("showkey.json", %{key: json_string})
+
+      {:error, err} ->
+        Logger.info(inspect(%{errors: JSON.encode!(err.errors)}))
+
+        conn
+        |> put_status(400)
+        |> render("error.json", %{errors: JSON.encode!(err.errors)})
+    end
   end
 
   def show(conn, %{"id" => id}) do

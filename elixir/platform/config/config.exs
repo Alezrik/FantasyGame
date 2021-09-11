@@ -10,6 +10,9 @@ use Mix.Config
 config :platform,
   ecto_repos: [Platform.Repo]
 
+config :mnesia,
+  dir: '.mnesia/#{Mix.env()}/#{node()}'
+
 # Configures the endpoint
 config :platform, PlatformWeb.Endpoint,
   url: [host: "localhost"],

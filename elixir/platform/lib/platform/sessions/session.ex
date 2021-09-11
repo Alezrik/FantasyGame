@@ -6,6 +6,7 @@ defmodule Platform.Sessions.Session do
     field :cpu, :string
     field :deviceid, :string
     field :localip, :string
+    field :last_access, :utc_datetime
 
     timestamps()
   end
@@ -15,5 +16,7 @@ defmodule Platform.Sessions.Session do
     session
     |> cast(attrs, [:cpu, :deviceid, :localip])
     |> validate_required([:cpu, :deviceid, :localip])
+    |> unique_constraint([:cpu, :deviceid, :localip])
+    |> put_change(:last_access, DateTime.truncate(DateTime.utc_now(), :second))
   end
 end

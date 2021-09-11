@@ -6,6 +6,7 @@
 #include "Runtime/Networking/Public/Interfaces/IPv4/IPv4Address.h"
 #include "Runtime/Sockets/Public/SocketSubsystem.h"
 #include "Templates/SharedPointer.h"
+#include "FantasyGameInstance.h"
 
 
 // Sets default values
@@ -127,12 +128,17 @@ void AAPlatformClient::OnSessionCreateResponse(FHttpRequestPtr Request, FHttpRes
 		{
 			//Get the value of the json object by field name
 			//int32 recievedInt = JsonObject->GetIntegerField("customInt");
-			FString status = JsonObject->GetStringField("session");
-			//Output it to the engine
+			if (JsonObject->HasField("errors")) {
+				GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Red, "got err resp:" + JsonObject->GetStringField("errors"));
+			}
+			else
+			{
+				FString key = JsonObject->GetStringField("key");
+				GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, "got key resp:" + key);
+				UFantasyGameInstance* instance = Cast<UFantasyGameInstance>(this->GetWorld()->GetGameInstance());
+				instance->setSessionKey(key);
+			}
 			
-			GEngine->AddOnScreenDebugMessage(1, 2.0f, FColor::Green, "got sessoin:" + status);
-			
-
 		}
 
 	}
