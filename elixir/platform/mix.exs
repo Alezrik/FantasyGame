@@ -48,7 +48,8 @@ defmodule Platform.MixProject do
       {:memento, "~> 0.3.2"},
       {:json, "~> 1.4"},
       {:sobelow, "~> 0.8", only: :dev},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      { :uuid, "~> 1.1" }
     ]
   end
 

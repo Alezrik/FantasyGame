@@ -14,12 +14,12 @@ defmodule Platform.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Platform.PubSub},
       # Start the Endpoint (http/https)
-      PlatformWeb.Endpoint
+      PlatformWeb.Endpoint,
       # Start a worker by calling: Platform.Worker.start_link(arg)
       # {Platform.Worker, arg}
+      Platform.Session.SessionManager
     ]
-
-    Memento.Table.create!(Platform.SessionCache)
+    Memento.Table.create!(Platform.SessionTracker)
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
