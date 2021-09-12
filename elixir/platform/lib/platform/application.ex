@@ -19,6 +19,7 @@ defmodule Platform.Application do
       # {Platform.Worker, arg}
       Platform.Session.SessionManager
     ]
+
     Memento.Table.create!(Platform.SessionTracker)
 
     # See https://hexdocs.pm/elixir/Supervisor.html

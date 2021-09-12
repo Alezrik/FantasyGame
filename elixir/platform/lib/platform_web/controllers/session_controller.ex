@@ -1,44 +1,42 @@
 defmodule PlatformWeb.SessionController do
   use PlatformWeb, :controller
 
-  alias Platform.Sessions
-  alias Platform.Sessions.Session
   require Logger
 
   action_fallback PlatformWeb.FallbackController
 
-  def index(conn, _params) do
-    sessions = Sessions.list_sessions()
-    render(conn, "index.json", sessions: sessions)
+  def create(conn, %{"cpu" => cpu, "localip" => localip, "deviceid" => deviceid}) do
+    remoteip = List.foldr(Tuple.to_list(conn.remote_ip), "", fn acc, e -> "#{acc}.#{e}" end)
+    remoteip = String.slice(remoteip, 0, String.length(remoteip) - 1)
+    Logger.info("creating new session for client:#{localip}")
+
+    case Platform.Session.create_session(%{
+           cpu: cpu,
+           deviceid: deviceid,
+           localip: localip,
+           remoteip: remoteip
+         }) do
+      {:ok, json_string} ->
+        Logger.info('session create successfully')
+
+        conn
+        |> put_status(:created)
+        |> render("showkey.json", %{key: json_string})
+
+      {:error, reason} ->
+        Logger.error("failed create session with : #{reason}")
+
+        conn
+        |> put_status(400)
+        |> render("error.json", %{errors: ["invalid args"]})
+    end
   end
 
-  def create(conn, %{"cpu"=>cpu, "localip"=> localip, "deviceid"=> deviceid}) do
-    remoteip = List.foldr(Tuple.to_list(conn.remote_ip), "", fn acc, e -> "#{acc}.#{e}" end)
+  def create(conn, options) do
+    Logger.error("invalid create session request: missing args")
 
-    Logger.info("creating new session for client")
-    json_string = Platform.Session.create_session(%{
-      cpu: cpu,
-      deviceid: deviceid,
-      localip: localip,
-      remoteip: remoteip
-    })
     conn
-    |> put_status(:created)
-    |> render("showkey.json", %{key: json_string})
-
-    #    case Sessions.create_session(session_params) do
-#      {:ok, session} ->
-#
-#        Platform.SessionCache.save_session(session.id, json_string)
-#
-#
-#      {:error, err} ->
-#        Logger.info(inspect(%{errors: JSON.encode!(err.errors)}))
-#
-#        conn
-#        |> put_status(400)
-#        |> render("error.json", %{errors: JSON.encode!(err.errors)})
-#    end
-
+    |> put_status(400)
+    |> render("error.json", %{errors: ["invalid args"]})
   end
 end

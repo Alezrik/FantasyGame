@@ -1,4 +1,5 @@
 defmodule Platform.Session.SessionManager do
+  @moduledoc false
   use Supervisor
 
   def start_link(init_arg) do
@@ -13,6 +14,4 @@ defmodule Platform.Session.SessionManager do
 
     Supervisor.init(children, strategy: :one_for_one)
   end
-
-
 end
