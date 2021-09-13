@@ -20,6 +20,10 @@ class FANTASYGAME_API UFantasyGameInstance : public UGameInstance
 		void setSessionKey(FString key) {
 			SessionKey = key;
 		};
+		UFUNCTION(BlueprintCallable)
+		FString getSessionKey() {
+			return SessionKey;
+		}
 private:
 		FString SessionKey;
 
