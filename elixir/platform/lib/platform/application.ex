@@ -17,10 +17,12 @@ defmodule Platform.Application do
       PlatformWeb.Endpoint,
       # Start a worker by calling: Platform.Worker.start_link(arg)
       # {Platform.Worker, arg}
-      Platform.Session.SessionManager
+      Platform.Session.SessionManager,
+      Platform.Login.LoginManager
     ]
 
     Memento.Table.create!(Platform.SessionTracker)
+    Memento.Table.create!(Platform.LoginTracker)
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

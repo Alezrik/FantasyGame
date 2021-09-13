@@ -119,7 +119,7 @@ void AAPlatformClient::OnSessionCreateResponse(FHttpRequestPtr Request, FHttpRes
 }
 
 void AAPlatformClient::OnLoginResponse(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful) {
-	FPlatformClientResponse response = ProcessHttpResponse(Response, bWasSuccessful, "key");
+	FPlatformClientResponse response = ProcessHttpResponse(Response, bWasSuccessful, "token");
 	if (response.IsError)
 	{
 		LastError = response.ResponseBody;

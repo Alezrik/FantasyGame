@@ -9,7 +9,7 @@ defmodule Platform.Session.SessionWorker do
   end
 
   def start_link(default) do
-    Logger.info("Starting new worker")
+    Logger.info("Starting new Session worker")
 
     GenServer.start_link(__MODULE__, default,
       name: String.to_atom("session_#{default.session_id}")

@@ -50,6 +50,9 @@ defmodule Platform.MixProject do
       {:uuid, "~> 1.1"},
       {:iptools, "~> 0.0.2"},
 
+      # jwt / auth
+      {:guardian, "~> 2.0"},
+
       # Mnesia
       {:memento, "~> 0.3.2"},
       # Code Tools

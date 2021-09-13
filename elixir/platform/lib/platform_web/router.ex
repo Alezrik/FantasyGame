@@ -24,6 +24,7 @@ defmodule PlatformWeb.Router do
   scope "/api", PlatformWeb do
     get "/ping", PingController, :index
     post "/sessions", SessionController, :create
+    post "/login", LoginController, :create
   end
 
   # Other scopes may use custom stacks.

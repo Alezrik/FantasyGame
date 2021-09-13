@@ -28,7 +28,7 @@ defmodule PlatformWeb.SessionController do
 
         conn
         |> put_status(400)
-        |> render("error.json", %{errors: ["invalid args"]})
+        |> render("error.json", %{errors: "invalid args"})
     end
   end
 
@@ -37,6 +37,6 @@ defmodule PlatformWeb.SessionController do
 
     conn
     |> put_status(400)
-    |> render("error.json", %{errors: ["invalid args"]})
+    |> render("error.json", %{errors: "invalid args"})
   end
 end

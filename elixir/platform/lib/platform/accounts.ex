@@ -37,6 +37,14 @@ defmodule Platform.Accounts do
   """
   def get_user!(id), do: Repo.get!(User, id)
 
+  def get_user_by_name(name) do
+    query =
+      from u in Platform.Accounts.User,
+        where: u.name == ^name
+
+    Repo.all(query)
+  end
+
   @doc """
   Creates a user.
 
