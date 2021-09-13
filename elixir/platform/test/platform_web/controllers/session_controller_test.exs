@@ -55,4 +55,16 @@ defmodule PlatformWeb.SessionControllerTest do
       assert json_response(conn, 400)["errors"]
     end
   end
+
+  describe "create session removes old sessions" do
+    test "render and create new session on dupe", %{conn: conn} do
+      conn_with_api_header = build_conn()
+      conn = post(conn, Routes.session_path(conn, :create), @create_attrs)
+      assert json_response(conn, 201)["key"]
+      conn2 = post(conn_with_api_header, Routes.session_path(conn, :create), @create_attrs)
+      assert json_response(conn2, 201)["key"]
+
+    end
+
+  end
 end

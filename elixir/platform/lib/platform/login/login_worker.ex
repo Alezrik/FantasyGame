@@ -10,7 +10,6 @@ defmodule Platform.Login.LoginWorker do
 
   def start_link(default) do
     Logger.info("Starting new Login worker")
-
-    GenServer.start_link(__MODULE__, default, name: String.to_atom("login_#{default.login_id}"))
+    GenServer.start_link(__MODULE__, default, {:via, Registry, {Registry.Login, "session_#{default.session_id}"}})
   end
 end

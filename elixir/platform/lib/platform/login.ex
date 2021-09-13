@@ -2,7 +2,8 @@ defmodule Platform.Login do
   @moduledoc false
   require Logger
 
-  def login_user(%{:deviceid => deviceid, :username => username, :password => password}) do
+  def login_user(%{:deviceid => deviceid, :username => username, :password => password})
+      when not is_nil(deviceid) and not is_nil(username) do
     Logger.info("login user")
 
     case verify_login_parameters(deviceid, username, password) do

@@ -1,7 +1,15 @@
 defmodule Platform.Session do
-  @moduledoc false
+  @moduledoc """
+  Session API
+  """
   require Logger
 
+  @spec create_session(%{
+          cpu: String.t(),
+          deviceid: String.t(),
+          localip: String.t(),
+          remoteip: String.t()
+        }) :: {:error, String.t()} | {:ok, String.t()}
   def create_session(%{
         :cpu => cpu,
         :deviceid => deviceid,
@@ -47,6 +55,8 @@ defmodule Platform.Session do
     end
   end
 
+  @spec verify_create_session_params(String.t(), String.t(), String.t(), String.t()) ::
+          {:error, String.t()} | {:ok}
   defp verify_create_session_params(cpu, deviceid, localip, remoteip) do
     if String.length(localip) < 1 || String.length(cpu) < 1 || String.length(localip) < 1 ||
          String.length(remoteip) < 1 do
@@ -80,7 +90,7 @@ defmodule Platform.Session do
   defp remove_session(session) do
     Logger.warn("removing duplicate session workers: #{session.name} at #{session.node}")
     Platform.SessionTracker.delete_session_record(session)
-    GenServer.stop({String.to_atom(session.name), String.to_atom(session.node)})
+    GenServer.stop(String.to_atom("session_#{session.session_id}"))
     {:ok}
   end
 end

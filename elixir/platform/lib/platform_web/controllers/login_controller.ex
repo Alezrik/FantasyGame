@@ -13,11 +13,14 @@ defmodule PlatformWeb.LoginController do
     case Platform.Login.login_user(%{username: username, password: password, deviceid: deviceid}) do
       {:error, reason} ->
         Logger.warn("login failure: #{reason}")
+
         conn
         |> put_status(400)
         |> render("error.json", %{errors: "Invalid Credentials"})
+
       {:ok, token} ->
         Logger.info("login authenticate success")
+
         conn
         |> put_status(:created)
         |> render("login.json", %{token: token})

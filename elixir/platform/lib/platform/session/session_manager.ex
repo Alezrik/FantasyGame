@@ -8,6 +8,7 @@ defmodule Platform.Session.SessionManager do
 
   @impl true
   def init(_init_arg) do
+    {:ok, _} = Registry.start_link(keys: :unique, name: Registry.Session)
     children = [
       {Platform.Session.SessionWorkerSupervisor, []}
     ]
