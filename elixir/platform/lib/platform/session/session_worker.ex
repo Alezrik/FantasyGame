@@ -16,7 +16,7 @@ defmodule Platform.Session.SessionWorker do
     Phoenix.PubSub.broadcast(Platform.PubSub, "create-session", %{
       msg: "create-session",
       session_hash: default.session_hash,
-      node: self()
+      node: pid
     })
 
     {:ok, pid}

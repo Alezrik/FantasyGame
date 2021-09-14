@@ -9,7 +9,8 @@ defmodule Platform.Login.LoginManager do
   @impl true
   def init(_init_arg) do
     children = [
-      {Platform.Login.LoginWorkerSupervisor, []}
+      {Platform.Login.LoginWorkerSupervisor, []},
+      {Platform.Login.LoginTracker, []}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)

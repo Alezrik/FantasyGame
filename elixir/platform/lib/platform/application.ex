@@ -21,7 +21,6 @@ defmodule Platform.Application do
       Platform.Login.LoginManager
     ]
 
-    Memento.Table.create!(Platform.LoginTracker)
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

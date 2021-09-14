@@ -20,14 +20,14 @@ defmodule Platform.Login do
           {:ok, token, hash_string, login_id} ->
             Logger.info("add login to tracker")
 
-            Platform.LoginTracker.add_login(
-              login_id,
-              hash_string,
-              deviceid,
-              token,
-              Atom.to_string(node()),
-              "login_#{login_id}"
-            )
+#            Platform.LoginTracker.add_login(
+#              login_id,
+#              hash_string,
+#              deviceid,
+#              token,
+#              Atom.to_string(node()),
+#              "login_#{login_id}"
+#            )
 
             Platform.Login.LoginWorkerSupervisor.start_child(%{
               login_id: login_id,
