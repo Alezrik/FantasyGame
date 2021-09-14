@@ -28,12 +28,15 @@ defmodule Platform.Login do
 #              Atom.to_string(node()),
 #              "login_#{login_id}"
 #            )
-
+            login_create_time = DateTime.utc_now()
+            login_last_req = DateTime.utc_now()
             Platform.Login.LoginWorkerSupervisor.start_child(%{
               login_id: login_id,
               login_hash: hash_string,
               deviceid: deviceid,
-              jwt: token
+              jwt: token,
+              login_create_time: login_create_time,
+              login_last_req: login_last_req
             })
 
             {:ok, hash_string}
