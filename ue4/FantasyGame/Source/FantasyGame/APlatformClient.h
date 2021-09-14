@@ -16,7 +16,8 @@ enum class PlatformClientStatus: uint8
 	SetupSession = 2 UMETA(DisplayName = "Create Session"),
 	SessionCreated = 3 UMETA(DisplayName = "Session Created"),
 	StartLogin = 4 UMETA(DisplayName = "Start Login"),
-	LoginError = 5 UMETA(DisplayName = "Login Error")
+	LoginError = 5 UMETA(DisplayName = "Login Error"),
+	LoginComplete = 6 UMETA(DisplayName = "Login Complete")
 };
 
 USTRUCT(BlueprintType)
@@ -80,6 +81,7 @@ private:
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> SetupRequestUrl(FString verb, FString url);
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> SetupStandardHeaders(TSharedRef<IHttpRequest, ESPMode::ThreadSafe> request);
 	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> SetupSessionHeader(TSharedRef<IHttpRequest, ESPMode::ThreadSafe> request);
+	TSharedRef<IHttpRequest, ESPMode::ThreadSafe> SetupLoginHeader(TSharedRef<IHttpRequest, ESPMode::ThreadSafe> request);
 	FPlatformClientResponse ProcessHttpResponse(FHttpResponsePtr Response, bool bWasSuccessful, FString dataKey, FString errorKey = "errors");
 	
 };

@@ -24,8 +24,18 @@ class FANTASYGAME_API UFantasyGameInstance : public UGameInstance
 		FString getSessionKey() {
 			return SessionKey;
 		}
+
+		void setLoginKey(FString key) {
+			LoginKey = key;
+		};
+		UFUNCTION(BlueprintCallable)
+			FString getLoginKey() {
+			return LoginKey;
+		}
+
 private:
 		FString SessionKey;
+		FString LoginKey;
 
 		/*UPROPERTY()
 		UPlatformClient* platformClient;

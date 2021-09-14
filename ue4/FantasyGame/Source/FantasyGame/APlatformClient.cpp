@@ -127,7 +127,10 @@ void AAPlatformClient::OnLoginResponse(FHttpRequestPtr Request, FHttpResponsePtr
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Green, TEXT("Response Success!"));
+
+		ClientStatus = PlatformClientStatus::LoginComplete;
+		UFantasyGameInstance* instance = Cast<UFantasyGameInstance>(this->GetWorld()->GetGameInstance());
+		instance->setLoginKey(response.ResponseBody);
 	}
 }
 
@@ -176,6 +179,14 @@ TSharedRef<IHttpRequest, ESPMode::ThreadSafe> AAPlatformClient::SetupSessionHead
 	UFantasyGameInstance* instance = Cast<UFantasyGameInstance>(this->GetWorld()->GetGameInstance());
 	FString key = instance->getSessionKey();
 	request->SetHeader(TEXT("DeviceId"), key);
+	return request;
+}
+
+TSharedRef<IHttpRequest, ESPMode::ThreadSafe> AAPlatformClient::SetupLoginHeader(TSharedRef<IHttpRequest, ESPMode::ThreadSafe> request)
+{
+	UFantasyGameInstance* instance = Cast<UFantasyGameInstance>(this->GetWorld()->GetGameInstance());
+	FString key = instance->getLoginKey();
+	request->SetHeader(TEXT("Authorization"), "Bearer " + key);
 	return request;
 }
 
