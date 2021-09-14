@@ -12,3 +12,6 @@
 
 {:ok, _user} =
   Platform.Accounts.create_user(%{name: "admin", email: "here@there.com", password: "password"})
+
+{:ok, world} = Platform.Worlds.create_world(%{name: "default world"})
+{:ok, zome} = Platform.Zones.create_zone(%{name: "default start zone", world_id: world.id})

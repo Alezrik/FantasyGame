@@ -25,6 +25,9 @@ defmodule PlatformWeb.Router do
     get "/ping", PingController, :index
     post "/sessions", SessionController, :create
     post "/login", LoginController, :create
+    resources "/worlds", WorldController, except: [:new, :edit]
+    resources "/zones", ZoneController, except: [:new, :edit]
+
   end
 
   # Other scopes may use custom stacks.
