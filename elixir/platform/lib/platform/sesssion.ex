@@ -23,22 +23,14 @@ defmodule Platform.Session do
       {:ok} ->
         session_id = UUID.uuid1()
 
+        session_create_time = DateTime.utc_now()
+        session_last_req = DateTime.utc_now()
+
         session_hash =
           :crypto.hash(:sha256, "#{localip}__#{deviceid}__#{cpu}__#{remoteip}")
           |> Base.encode16()
 
-        repeat_hash = Platform.SessionTracker.get_sessions_by_hash(session_hash)
-
-        {:ok} = remove_old_sessions(repeat_hash)
-
-        Logger.info("add session to tracker")
-
-        Platform.SessionTracker.add_session(
-          session_id,
-          session_hash,
-          Atom.to_string(node()),
-          "session_#{session_id}"
-        )
+        GenServer.cast(Platform.Session.SessionTracker, {:delete_session, session_hash})
 
         Logger.info("Startup SessionWorker: session_#{session_id}")
 
@@ -48,7 +40,9 @@ defmodule Platform.Session do
           deviceid: deviceid,
           remoteip: remoteip,
           session_hash: session_hash,
-          session_id: session_id
+          session_id: session_id,
+          session_create_time: session_create_time,
+          session_last_req: session_last_req
         })
 
         {:ok, session_hash}
@@ -68,29 +62,5 @@ defmodule Platform.Session do
         {:ok}
       end
     end
-  end
-
-  defp remove_old_sessions(dup_hash) when is_list(dup_hash) and length(dup_hash) > 0 do
-    Enum.each(dup_hash, fn h ->
-      remove_session(h)
-    end)
-
-    {:ok}
-  end
-
-  defp remove_old_sessions(dup_hash) when is_list(dup_hash) do
-    {:ok}
-  end
-
-  defp remove_old_sessions(dup_hash) when is_struct(dup_hash) do
-    remove_session(dup_hash)
-    {:ok}
-  end
-
-  defp remove_session(session) do
-    Logger.warn("removing duplicate session workers: #{session.name} at #{session.node}")
-    Platform.SessionTracker.delete_session_record(session)
-    GenServer.stop(String.to_atom("session_#{session.session_id}"))
-    {:ok}
   end
 end

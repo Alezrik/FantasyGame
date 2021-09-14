@@ -9,10 +9,23 @@ defmodule Platform.Session.SessionWorker do
   end
 
   def start_link(default) do
-    Logger.error("Starting new Session worker: session_#{default.session_id}")
+    Logger.info("Starting new Session worker: session_#{default.session_id}")
 
+    {:ok, pid} = GenServer.start_link(__MODULE__, default)
 
-    {:ok, pid} = GenServer.start_link(__MODULE__, default, [name: String.to_atom("session_#{default.session_id}")])
+    Phoenix.PubSub.broadcast(Platform.PubSub, "create-session", %{
+      msg: "create-session",
+      session_hash: default.session_hash,
+      node: self()
+    })
+
     {:ok, pid}
+  end
+
+  def terminate(_reason, state) do
+    Phoenix.PubSub.broadcast(Platform.PubSub, "delete-session", %{
+      msg: "delete-session",
+      session_hash: state.session_hash
+    })
   end
 end

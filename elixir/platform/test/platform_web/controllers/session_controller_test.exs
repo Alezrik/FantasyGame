@@ -63,8 +63,6 @@ defmodule PlatformWeb.SessionControllerTest do
       assert json_response(conn, 201)["key"]
       conn2 = post(conn_with_api_header, Routes.session_path(conn, :create), @create_attrs)
       assert json_response(conn2, 201)["key"]
-
     end
-
   end
 end
