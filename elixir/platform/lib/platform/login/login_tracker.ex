@@ -25,6 +25,7 @@ defmodule Platform.Login.LoginTracker do
     end
 
     {:noreply, new_state}
+
   end
 
   def handle_call({:get_worker, login_hash}, _from, state) do
