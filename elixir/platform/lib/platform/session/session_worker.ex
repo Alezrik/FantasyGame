@@ -12,7 +12,7 @@ defmodule Platform.Session.SessionWorker do
     Logger.error("Starting new Session worker: session_#{default.session_id}")
 
 
-    {:ok, pid} = GenServer.start_link(__MODULE__, default, name: String.to_atom("session_#{default.session_id}"))
+    {:ok, pid} = GenServer.start_link(__MODULE__, default, [name: String.to_atom("session_#{default.session_id}")])
     {:ok, pid}
   end
 end
