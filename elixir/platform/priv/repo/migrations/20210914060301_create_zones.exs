@@ -7,6 +7,5 @@ defmodule Platform.Repo.Migrations.CreateZones do
 
       timestamps()
     end
-
   end
 end

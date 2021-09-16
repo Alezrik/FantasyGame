@@ -133,7 +133,7 @@ void AAPlatformClient::OnLoginResponse(FHttpRequestPtr Request, FHttpResponsePtr
 		instance->setLoginKey(response.ResponseBody);
 	}
 }
-
+	
 void AAPlatformClient::StartLogin(FString username, FString password) {
 	if (ClientStatus == PlatformClientStatus::SessionCreated) {
 

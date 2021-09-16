@@ -5,6 +5,5 @@ defmodule Platform.Repo.Migrations.ZonesBelongsToWorld do
     alter table(:zones) do
       add :world_id, references(:worlds)
     end
-
   end
 end

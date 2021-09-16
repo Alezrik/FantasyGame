@@ -66,7 +66,10 @@ defmodule Platform.MixProject do
       {:sobelow, "~> 0.8", only: :dev},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:excoveralls, "~> 0.10", only: :test}
+      {:excoveralls, "~> 0.10", only: :test},
+
+      # Test tools
+      {:stream_data, "~> 0.5", only: :test}
     ]
   end
 

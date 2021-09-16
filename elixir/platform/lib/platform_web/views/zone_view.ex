@@ -11,7 +11,6 @@ defmodule PlatformWeb.ZoneView do
   end
 
   def render("zone.json", %{zone: zone}) do
-    %{id: zone.id,
-      name: zone.name}
+    %{id: zone.id, name: zone.name}
   end
 end

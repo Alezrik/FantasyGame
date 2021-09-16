@@ -7,6 +7,5 @@ defmodule Platform.Repo.Migrations.CreateWorlds do
 
       timestamps()
     end
-
   end
 end

@@ -26,7 +26,6 @@ defmodule Platform.Login.LoginTracker do
     end
 
     {:noreply, new_state}
-
   end
 
   def handle_cast({:delete_session, deviceid}, state) do
@@ -35,6 +34,7 @@ defmodule Platform.Login.LoginTracker do
         GenServer.stop(s.pid)
       end
     end)
+
     new_state = Enum.filter(state, fn f -> f.deviceid != deviceid end)
 
     if Enum.count(new_state) != Enum.count(state) do
@@ -42,9 +42,7 @@ defmodule Platform.Login.LoginTracker do
     end
 
     {:noreply, new_state}
-
   end
-
 
   def handle_call({:get_worker, login_hash}, _from, state) do
     worker = Enum.filter(state, fn obj -> obj.login_hash == login_hash end)
@@ -60,14 +58,14 @@ defmodule Platform.Login.LoginTracker do
     case(receive.msg) do
       "create-login" ->
         GenServer.cast(__MODULE__, {:add_login, receive.login_hash, receive.jwt, receive.node})
+
       "delete-login" ->
         GenServer.cast(__MODULE__, {:delete_login, receive.session_hash})
+
       "delete-session" ->
         GenServer.cast(__MODULE__, {:delete_session, receive.session_hash})
     end
 
     {:noreply, []}
   end
-
-
 end

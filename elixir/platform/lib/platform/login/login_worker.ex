@@ -11,9 +11,9 @@ defmodule Platform.Login.LoginWorker do
   def start_link(default) do
     Logger.info("Starting new Login worker: login_#{default.login_id}}")
 
-
     {:ok, pid} =
-      GenServer.start_link(__MODULE__, default, name: String.to_atom("login_#{default.login_id}"))
+      GenServer.start_link(__MODULE__, default)
+
     Phoenix.PubSub.broadcast(Platform.PubSub, "create-login", %{
       msg: "create-login",
       login_hash: default.login_hash,
@@ -21,8 +21,10 @@ defmodule Platform.Login.LoginWorker do
       deviceid: default.deviceid,
       node: pid
     })
+
     {:ok, pid}
   end
+
   def terminate(_reason, state) do
     Phoenix.PubSub.broadcast(Platform.PubSub, "delete-login", %{
       msg: "delete-login",

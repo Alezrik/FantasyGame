@@ -11,7 +11,6 @@ defmodule PlatformWeb.WorldView do
   end
 
   def render("world.json", %{world: world}) do
-    %{id: world.id,
-      name: world.name}
+    %{id: world.id, name: world.name}
   end
 end
